@@ -1,22 +1,20 @@
-package org.upstart.r1.mobs;
+package org.upstart.r1.objects.mobs;
 
-import org.upstart.r1.display.tiles.Tile;
 import org.upstart.r1.logic.Position;
+import org.upstart.r1.objects.AbstractObject;
 
 import java.io.IOException;
 
-public class AbstractMob {
-
+public class AbstractMob extends AbstractObject {
     public Position position;
 
-    public Tile tile;
-
     public AbstractMob(Position aPosition, String imgPath) throws IOException {
+        super(imgPath);
         this.position = aPosition;
-        this.tile = new Tile(imgPath);
     }
 
     public AbstractMob(int xPos, int yPos, String imgPath) throws IOException {
-        this(new Position(xPos, yPos), imgPath);
+        super(imgPath);
+        this.position = new Position(xPos, yPos);
     }
 }

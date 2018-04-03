@@ -1,31 +1,33 @@
 package org.upstart.r1.logic.generation;
 
-import org.upstart.r1.display.tiles.Tile;
+import org.upstart.r1.display.graphics.MapTile;
+import org.upstart.r1.display.graphics.Sprite;
+import org.upstart.r1.logic.Map;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static org.upstart.r1.util.Random.*;
 import static org.upstart.r1.util.Math.*;
+import static org.upstart.r1.util.Random.rand;
 
 public class DungeonGenerator {
 
     int mapWidth;
     int mapHeight;
-    Tile floor;
-    Tile wall;
-    Tile[][] tileMap;
+    private Sprite floorSprite;
+    private Sprite wallSprite;
+    Map map;
 
-    public DungeonGenerator(int mapWidth, int mapHeight, Tile floor, Tile wall) {
+    public DungeonGenerator(int mapWidth, int mapHeight, Sprite floorSprite, Sprite wallSprite) {
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
-        this.floor = floor;
-        this.wall = wall;
-        tileMap = new Tile[mapWidth][mapHeight];
+        this.floorSprite = floorSprite;
+        this.wallSprite = wallSprite;
+        map = new Map(mapWidth, mapHeight);
 
     }
 
-    public Tile[][] fetch() {
+    public Map getMap() {
         int prevX = 0;
         int prevY = 0;
 
@@ -44,7 +46,7 @@ public class DungeonGenerator {
 
         }
 
-        return tileMap;
+        return map;
     }
 
     public void makeRoom(int centerX, int centerY, int width, int height) {
@@ -57,23 +59,31 @@ public class DungeonGenerator {
         int startY = max(0, centerY - roundDown(height, 2));
         int endY = min(centerY + roundUp(height, 2), mapHeight);
 
-        System.out.println(
-                String.format("box corners: [%d, %d], [%d, %d]", startX, startY, endX, endY)
-        );
+//        System.out.println(
+//                String.format("box corners: [%d, %d], [%d, %d]", startX, startY, endX, endY)
+//        );
 
         for(int x=startX;x<endX;x++) {
             for(int y=startY;y<endY;y++) {
                 if(x == startX || x == endX -1) {
-                    tileMap[x][y] = wall;
+                    map.put(x, y, newWall());
                 }
                 else if (y==startY || y == endY -1) {
-                    tileMap[x][y] = wall;
+                    map.put(x, y, newWall());
                 }
                 else {
-                    tileMap[x][y] = floor;
+                    map.put(x, y, newFloor());
                 }
             }
         }
+    }
+
+    private MapTile newWall() {
+        return new MapTile(wallSprite, false);
+    }
+
+    private MapTile newFloor() {
+        return new MapTile(floorSprite, true);
     }
 
     public void makeHall(int startX, int startY, int endX, int endY) {
@@ -99,39 +109,28 @@ public class DungeonGenerator {
     private void goRight(int startX, int startY, int distance) {
         int i;
         for(i = 0; i<=distance; i++) {
-            if(tileMap[startX + i][startY - 1] == null) {
-                tileMap[startX + i][startY - 1] = wall;
-            }
-//            if(tileMap[startX + i][startY] == null) {
-                tileMap[startX + i][startY] = floor;
-//            }
-            if(tileMap[startX + i][startY + 1] == null) {
-                tileMap[startX + i][startY + 1] = wall;
-            }
+            map.putIfNull(startX + i, startY - 1, newWall());
+            map.put(startX + i, startY, newFloor());
+            map.putIfNull(startX + i, startY + 1, newWall());
         }
         // cap it
-        if(tileMap[startX + i][startY - 1] != floor) tileMap[startX + i][startY - 1] = wall;
-        if(tileMap[startX + i][startY] != floor) tileMap[startX + i][startY] = wall;
-        if(tileMap[startX + i][startY + 1] != floor) tileMap[startX + i][startY + 1] = wall;
+        int x = startX  + i, y = startY - 1;
+        for(int n=0; n<3; n++) {
+            map.putIfNull(x, y + n, newWall());
+        }
     }
 
     private void goDown(int startX, int startY, int distance) {
         int i;
         for(i=0;i<=distance;i++) {
-            if(tileMap[startX - 1][startY + i] == null) {
-                tileMap[startX - 1][startY + i] = wall;
-            }
-//            if(tileMap[startX][startY + i] == null) {
-                tileMap[startX][startY + i] = floor;
-//            }
-            if(tileMap[startX + 1][startY + i] == null) {
-                tileMap[startX + 1][startY + i] = wall;
-            }
+            map.putIfNull(startX - 1,startY + i, newWall());
+            map.put(startX, startY + i, newFloor());
+            map.putIfNull(startX + 1, startY + i, newWall());
         }
         // cap it
-        if(tileMap[startX - 1][startY + i] != floor) tileMap[startX - 1][startY + i] = wall;
-        if(tileMap[startX][startY + i] != floor) tileMap[startX][startY + i] = wall;
-        if(tileMap[startX + 1][startY + i] != floor) tileMap[startX + 1][startY + i] = wall;
+        int x = startX - 1, y = startY + i;
+        for(int n=0; n<3; n++) {
+            map.putIfNull(x + n, y, newWall());
+        }
     }
-
 }

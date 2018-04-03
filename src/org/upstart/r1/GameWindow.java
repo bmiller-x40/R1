@@ -6,8 +6,6 @@ import org.upstart.r1.display.StatusPanel;
 import org.upstart.r1.display.ui.FileMenu;
 import org.upstart.r1.display.ui.UiActionListener;
 import org.upstart.r1.logic.GameState;
-import org.upstart.r1.logic.Map;
-import org.upstart.r1.mobs.player.Player;
 
 import javax.swing.*;
 import java.awt.*;

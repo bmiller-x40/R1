@@ -1,9 +1,10 @@
 package org.upstart.r1.display;
 
-import org.upstart.r1.display.tiles.Tile;
+import org.upstart.r1.display.graphics.MapTile;
 import org.upstart.r1.logic.GameState;
 import org.upstart.r1.logic.Map;
-import org.upstart.r1.mobs.player.Player;
+import org.upstart.r1.objects.AbstractObject;
+import org.upstart.r1.objects.player.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,6 +36,7 @@ public class MapPanel extends JPanel {
         workingBuffer = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         drawMap(map, leftEdge, topEdge, leftEdge + visibleTilesX, topEdge + visibleTilesY);
+        drawObjects(map, leftEdge, topEdge, leftEdge + visibleTilesX, topEdge + visibleTilesY);
         drawPlayer(gameState);
 
         paintedBuffer = workingBuffer;
@@ -60,21 +62,41 @@ public class MapPanel extends JPanel {
 
         for(int x=0; x < bufferEndX; x++) {
             for(int y=0; y < bufferEndY; y++) {
-                Tile tile = map.getTile(mapStartX + x, mapStartY + y);
-                if(tile != null) {
+                MapTile mapTile = map.getTile(mapStartX + x, mapStartY + y);
+                if(mapTile != null) {
 //                    System.out.println(
-//                            String.format("draw %s at [%d, %d]", ((tile.isWall())? "wall":"floor"), x, y)
+//                            String.format("draw %s at [%d, %d]", ((mapTile.isWall())? "wall":"floor"), x, y)
 //                    );
-                    g.drawImage(tile.img, x * 32, y * 32, null);
+                    g.drawImage(mapTile.sprite.img, x * 32, y * 32, null);
                 }
             }
         }
     }
 
-    private void drawPlayer(GameState gameState) {
-//        System.out.println("adding player");
+    private void drawObjects(Map map, int startX, int startY, int endX, int endY) {
+        Graphics g = workingBuffer.getGraphics();
+        for(int x = startX; x < endX; x++) {
+            for(int y = startY; y < endY; y++) {
+                MapTile tile = map.getTile(x, y);
+                if(tile != null && tile.hasContent())
+                    for (AbstractObject o : tile.getInventory()) {
+                        System.out.println(
+                                String.format("draw object at %d, %d", x, y)
+                        );
+                        int ox = (x - startX) * 32;
+                        int oy = (y - startY) * 32;
+                        boolean rval = g.drawImage(o.sprite.img, ox, oy,  null);
+                        System.out.println("rval = " + rval);
+                    }
+            }
+        }
+    }
 
+    private void drawPlayer(GameState gameState) {
         Player p = gameState.getPlayer();
+        System.out.println(
+                String.format("draw player at %d, %d", p.position.x, p.position.y)
+        );
 
         int screenWidthInTiles = (this.getWidth() / 32);
         int screenHeightInTiles = (this.getHeight() / 32);
@@ -83,7 +105,7 @@ public class MapPanel extends JPanel {
         int centerY = (screenHeightInTiles / 2);
 
         Graphics g = workingBuffer.getGraphics();
-        g.drawImage(p.tile.img, centerX * 32, centerY * 32, null);
+        g.drawImage(p.sprite.img, centerX * 32, centerY * 32, null);
 
     }
 

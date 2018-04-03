@@ -1,10 +1,10 @@
 package org.upstart.r1.logic;
 
-import org.upstart.r1.display.tiles.Tile;
-import org.upstart.r1.display.tiles.TilesEnum;
-import org.upstart.r1.display.tiles.TileManager;
+import org.upstart.r1.display.graphics.MapTile;
+import org.upstart.r1.display.graphics.Sprite;
 import org.upstart.r1.logic.generation.ManualDungeonGenerator;
-import org.upstart.r1.mobs.player.Player;
+import org.upstart.r1.objects.AbstractObject;
+import org.upstart.r1.objects.player.Player;
 
 import java.io.IOException;
 
@@ -30,11 +30,11 @@ public class GameState {
         return instance;
     }
 
-    private void initMap() {
-        Tile DNG_FLOOR = TileManager.get(TilesEnum.DNG_FLOOR);
-        Tile DNG_WALL = TileManager.get(TilesEnum.DNG_WALL);
+    private void initMap() throws IOException {
+        Sprite floorSprite = new Sprite("images/dungeon/floor/crypt_10.png");
+        Sprite wallSprite = new Sprite("images/dungeon/wall/catacombs_0.png");
 
-        ManualDungeonGenerator dg = new ManualDungeonGenerator(50, 50, DNG_FLOOR, DNG_WALL);
+        ManualDungeonGenerator dg = new ManualDungeonGenerator(50, 50, floorSprite, wallSprite);
 
         dg.makeRoom(5, 5, 5, 5);
         dg.makeRoom(25, 25, 7, 5);
@@ -43,7 +43,10 @@ public class GameState {
         dg.makeHall(5,5, 25, 25);
         dg.makeHall(25,25, 45, 45);
 
-        currentMap = new Map(dg.getTileArray());
+        currentMap = dg.getMap();
+
+        AbstractObject box = new AbstractObject("images/item/misc/misc_box.png");
+        currentMap.placeObject(26,26, box);
     }
 
 

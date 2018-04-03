@@ -1,13 +1,14 @@
 package org.upstart.r1.logic.generation;
 
-import org.upstart.r1.display.tiles.Tile;
+import org.upstart.r1.display.graphics.Sprite;
+import org.upstart.r1.logic.Map;
 
 public class ManualDungeonGenerator extends DungeonGenerator {
-    public ManualDungeonGenerator(int mapWidth, int mapHeight, Tile floor, Tile wall) {
-        super(mapWidth, mapHeight, floor, wall);
+    public ManualDungeonGenerator(int mapWidth, int mapHeight, Sprite floorSprite, Sprite wallSprite) {
+        super(mapWidth, mapHeight, floorSprite, wallSprite);
     }
 
-    public Tile[][] getTileArray() {
-        return tileMap;
+    public Map getMap() {
+        return map;
     }
 }
