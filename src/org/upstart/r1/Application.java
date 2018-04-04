@@ -1,5 +1,7 @@
 package org.upstart.r1;
 
+import org.upstart.r1.display.GameWindow;
+import org.upstart.r1.display.logging.GameLogger;
 import org.upstart.r1.logic.CommandProcessor;
 import org.upstart.r1.logic.Direction;
 import org.upstart.r1.logic.GameState;
@@ -32,9 +34,11 @@ public class Application {
         gameState = GameState.getInstance();
 
         window.setVisible(true);
-        window.refresh(gameState);
+        window.refresh();
 
-        configureKeyBindings(window.mapPanel);
+        configureKeyBindings(window.getMapPanel());
+
+        GameLogger.getLogger().log(" -- BEGIN --");
     }
 
     public static Application getApp() {

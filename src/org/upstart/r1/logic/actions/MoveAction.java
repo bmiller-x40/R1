@@ -20,7 +20,7 @@ public class MoveAction extends GameAction {
         if (CollisionDetector.isPassable(gameState, position, direction)) {
             position.x += direction.modX;
             position.y += direction.modY;
-            Application.getApp().getWindow().refresh(gameState);
+            Application.getApp().getWindow().refresh();
             SoundManager.getSoundManager().play(SoundsEnum.FOOTSTEPS);
         } else {
             SoundManager.getSoundManager().play(SoundsEnum.WALL_BUMP);

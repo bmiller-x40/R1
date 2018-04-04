@@ -1,17 +1,18 @@
 package org.upstart.r1.logic;
 
-import org.upstart.r1.display.graphics.MapTile;
 import org.upstart.r1.display.graphics.Sprite;
 import org.upstart.r1.display.graphics.SpriteManager;
 import org.upstart.r1.logic.generation.ManualDungeonGenerator;
-import org.upstart.r1.objects.AbstractObject;
 import org.upstart.r1.objects.items.InventoryObject;
 import org.upstart.r1.objects.player.Player;
 
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameState {
     private static GameState instance = null;
+    private static ArrayList<PropertyChangeListener> listeners;
 
     Map currentMap;
     Player player;
@@ -20,6 +21,7 @@ public class GameState {
         try {
             initPlayer();
             initMap();
+            listeners = new ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,6 +32,18 @@ public class GameState {
             instance = new GameState();
         }
         return instance;
+    }
+
+    public void addListener(PropertyChangeListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(PropertyChangeListener listener) {
+        listeners.remove(listener);
+    }
+
+    private void notifyListeners() {
+
     }
 
     private void initMap() throws IOException {

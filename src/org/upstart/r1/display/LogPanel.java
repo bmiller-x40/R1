@@ -15,10 +15,10 @@ public class LogPanel extends JPanel {
 
     public LogPanel(int offset_x, int offset_y, int width, int height) {
         super();
-        System.out.println(
-                String.format("offset_x: %d, offset_y: %d, width: %d, height: %d",
-                               offset_x, offset_y, width, height)
-        );
+//        System.out.println(
+//                String.format("offset_x: %d, offset_y: %d, width: %d, height: %d",
+//                               offset_x, offset_y, width, height)
+//        );
         this.setBounds(offset_x, offset_y, width, height);
 
         this.setBackground(Color.GRAY);

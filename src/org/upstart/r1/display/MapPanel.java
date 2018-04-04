@@ -13,16 +13,15 @@ import java.awt.image.BufferedImage;
 public class MapPanel extends JPanel {
     BufferedImage paintedBuffer, workingBuffer;
 
-    public MapPanel(int offset_x, int offset_y, int width, int height) {
-        super(true);
-        this.setBounds(offset_x, offset_y, width, height);
+    public MapPanel(int width, int height) {
+        super();
+        this.setBounds(0, 0, width, height);
         this.setBackground(Color.BLACK);
-
         this.setBorder(BorderFactory.createLineBorder(Color.CYAN));
-
     }
 
-    public void refresh(GameState gameState) {
+    public void refresh() {
+        GameState gameState = GameState.getInstance();
 //        long drawTimeMillis = System.currentTimeMillis();
         Map map = gameState.getCurrentMap();
         Player p = gameState.getPlayer();
@@ -80,13 +79,12 @@ public class MapPanel extends JPanel {
                 MapTile tile = map.getTile(x, y);
                 if(tile != null && tile.hasContent())
                     for (AbstractObject o : tile.getInventory()) {
-                        System.out.println(
-                                String.format("draw object at %d, %d", x, y)
-                        );
+//                        System.out.println(
+//                                String.format("draw object at %d, %d", x, y)
+//                        );
                         int ox = (x - startX) * 32;
                         int oy = (y - startY) * 32;
                         boolean rval = g.drawImage(o.sprite.img, ox, oy,  null);
-                        System.out.println("rval = " + rval);
                     }
             }
         }
@@ -94,9 +92,9 @@ public class MapPanel extends JPanel {
 
     private void drawPlayer(GameState gameState) {
         Player p = gameState.getPlayer();
-        System.out.println(
-                String.format("draw player at %d, %d", p.position.x, p.position.y)
-        );
+//        System.out.println(
+//                String.format("draw player at %d, %d", p.position.x, p.position.y)
+//        );
 
         int screenWidthInTiles = (this.getWidth() / 32);
         int screenHeightInTiles = (this.getHeight() / 32);

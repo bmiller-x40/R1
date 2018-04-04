@@ -50,9 +50,9 @@ public class DungeonGenerator {
     }
 
     public void makeRoom(int centerX, int centerY, int width, int height) {
-        System.out.println(
-                String.format("make %d x %d room centered on %d,%d", width, height, centerX, centerY)
-        );
+//        System.out.println(
+//                String.format("make %d x %d room centered on %d,%d", width, height, centerX, centerY)
+//        );
 
         int startX = max(0, centerX - roundDown(width, 2));
         int endX = min(centerX + roundUp(width, 2), mapWidth);
@@ -87,9 +87,9 @@ public class DungeonGenerator {
     }
 
     public void makeHall(int startX, int startY, int endX, int endY) {
-        System.out.println(
-                String.format("make hall from %d, %d to %d,%d", startX, startY, endY, endY)
-        );
+//        System.out.println(
+//                String.format("make hall from %d, %d to %d,%d", startX, startY, endY, endY)
+//        );
 
         int currentX = min(startX, endX), currentY = min(startY, endY);
         int maxX = max(startX, endX), maxY = max(startY, endY);

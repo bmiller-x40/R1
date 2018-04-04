@@ -22,8 +22,7 @@ public class DropAction extends GameAction {
             InventoryObject object = playerInventory.remove(0);
             messageLog.log("You drop " + object.getName() + ".");
             tileInventory.add(object);
-            Application.getApp().getWindow().refresh(gameState);
-            System.out.println("playerInventory.isEmpty() = " + playerInventory.isEmpty());
+            Application.getApp().getWindow().refresh();
         }
     }
 }

@@ -22,8 +22,7 @@ public class GetAction extends GameAction {
             InventoryObject object = tileInventory.remove(0);
             messageLog.log("You picked up " + object.getName() + ".");
             playerInventory.add(object);
-            Application.getApp().getWindow().refresh(gameState);
-            System.out.println("playerInventory.isEmpty() = " + playerInventory.isEmpty());
+            Application.getApp().getWindow().refresh();
         }
     }
 
