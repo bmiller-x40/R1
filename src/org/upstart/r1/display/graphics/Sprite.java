@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Sprite {
     public final BufferedImage img;
 
-    public Sprite(String path) throws IOException {
+    protected Sprite(String path) throws IOException {
         img =  ImageIO.read(new File(path));
     }
 }

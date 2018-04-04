@@ -3,6 +3,8 @@ package org.upstart.r1;
 import org.upstart.r1.logic.CommandProcessor;
 import org.upstart.r1.logic.Direction;
 import org.upstart.r1.logic.GameState;
+import org.upstart.r1.logic.actions.DropAction;
+import org.upstart.r1.logic.actions.GetAction;
 import org.upstart.r1.logic.actions.MoveAction;
 
 import javax.swing.*;
@@ -70,5 +72,11 @@ public class Application {
 
         iMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD7, 0), Direction.NORTHWEST);
         aMap.put(Direction.NORTHWEST, new MoveAction(Direction.NORTHWEST));
+
+        iMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_G, 0), "GET");
+        aMap.put("GET", new GetAction());
+
+        iMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), "DROP");
+        aMap.put("DROP", new DropAction());
     }
 }

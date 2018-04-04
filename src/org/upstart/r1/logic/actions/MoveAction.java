@@ -14,11 +14,6 @@ public class MoveAction extends GameAction {
         this.direction = direction;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        CommandProcessor.getInstance().setAction(this);
-    }
-
     public void doAction() {
         GameState gameState = GameState.getInstance();
         Position position = gameState.getPlayer().position;

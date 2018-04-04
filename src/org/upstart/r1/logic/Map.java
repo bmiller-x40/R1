@@ -2,6 +2,7 @@ package org.upstart.r1.logic;
 
 import org.upstart.r1.display.graphics.MapTile;
 import org.upstart.r1.objects.AbstractObject;
+import org.upstart.r1.objects.items.InventoryObject;
 
 public class Map {
     MapTile[][] mapTiles;
@@ -71,12 +72,20 @@ public class Map {
         return x < mapTiles.length && y < mapTiles[0].length && mapTiles[x][y] != null && mapTiles[x][y].isPassable();
     }
 
-    public boolean placeObject(int x, int y, AbstractObject o) {
+    public boolean placeObject(int x, int y, InventoryObject o) {
         MapTile tile = getTile(x, y);
         if(tile == null) {
             return false;
         }
         tile.addObject(o);
         return true;
+    }
+
+    public MapTile getTile(Position position) {
+        return getTile(position.x, position.y);
+    }
+
+    public Inventory getTileInventory(Position position) {
+        return getTile(position).getInventory();
     }
 }

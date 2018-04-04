@@ -1,10 +1,9 @@
 package org.upstart.r1.display.graphics;
 
 import org.upstart.r1.logic.Inventory;
-import org.upstart.r1.objects.AbstractObject;
+import org.upstart.r1.objects.items.InventoryObject;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 public class MapTile {
     public Sprite sprite;
@@ -18,20 +17,19 @@ public class MapTile {
     }
 
     public MapTile(String path, boolean isPassable) throws IOException {
-        sprite = new Sprite(path);
-        this.isPassable = isPassable;
+        this(SpriteManager.getSprite(path), isPassable);
     }
 
     public boolean isPassable() {
         return isPassable;
     }
 
-    public boolean addObject(AbstractObject o) {
+    public boolean addObject(InventoryObject o) {
         return inventory.add(o);
     }
 
-    public void take(AbstractObject o) {
-        inventory.remove(o);
+    public boolean remove(InventoryObject o) {
+        return inventory.remove(o);
     }
 
     public Inventory getInventory() {

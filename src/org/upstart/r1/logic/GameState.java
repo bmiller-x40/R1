@@ -2,8 +2,10 @@ package org.upstart.r1.logic;
 
 import org.upstart.r1.display.graphics.MapTile;
 import org.upstart.r1.display.graphics.Sprite;
+import org.upstart.r1.display.graphics.SpriteManager;
 import org.upstart.r1.logic.generation.ManualDungeonGenerator;
 import org.upstart.r1.objects.AbstractObject;
+import org.upstart.r1.objects.items.InventoryObject;
 import org.upstart.r1.objects.player.Player;
 
 import java.io.IOException;
@@ -31,8 +33,8 @@ public class GameState {
     }
 
     private void initMap() throws IOException {
-        Sprite floorSprite = new Sprite("images/dungeon/floor/crypt_10.png");
-        Sprite wallSprite = new Sprite("images/dungeon/wall/catacombs_0.png");
+        Sprite floorSprite = SpriteManager.getSprite("images/dungeon/floor/crypt_10.png");
+        Sprite wallSprite = SpriteManager.getSprite("images/dungeon/wall/catacombs_0.png");
 
         ManualDungeonGenerator dg = new ManualDungeonGenerator(50, 50, floorSprite, wallSprite);
 
@@ -45,7 +47,7 @@ public class GameState {
 
         currentMap = dg.getMap();
 
-        AbstractObject box = new AbstractObject("images/item/misc/misc_box.png");
+        InventoryObject box = new InventoryObject("images/item/misc/misc_box.png", "a box");
         currentMap.placeObject(26,26, box);
     }
 

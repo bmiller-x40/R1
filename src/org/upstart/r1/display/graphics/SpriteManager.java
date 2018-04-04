@@ -6,9 +6,6 @@ import java.util.HashMap;
 public class SpriteManager {
     private static HashMap<String, Sprite> sprites = new HashMap<>();
 
-    private SpriteManager() {
-    }
-
     public static Sprite getSprite(String aPath) throws IOException {
 
         Sprite sprite = sprites.get(aPath);
