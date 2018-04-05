@@ -8,9 +8,6 @@ import org.upstart.r1.objects.items.InventoryObject;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.PlainDocument;
-import javax.swing.text.StyledDocument;
-import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
 
 public class TileInfoPanel extends JTextPane {

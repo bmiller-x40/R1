@@ -16,6 +16,7 @@ public class GameState {
 
     Map currentMap;
     Player player;
+    public boolean menuOpen = false;
 
     private GameState() {
         try {
@@ -62,7 +63,9 @@ public class GameState {
         currentMap = dg.getMap();
 
         InventoryObject box = new InventoryObject("images/item/misc/misc_box.png", "a box");
-        currentMap.placeObject(26,26, box);
+        currentMap.placeObject(25,25, box);
+        InventoryObject orb = new InventoryObject("images/item/misc/misc_crystal_old.png", "an orb");
+        currentMap.placeObject(25, 25, orb);
     }
 
 
